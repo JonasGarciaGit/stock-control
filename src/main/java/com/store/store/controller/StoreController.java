@@ -28,6 +28,7 @@ public class StoreController {
 	
 	@PostMapping(value = "/create" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody ResponseEntity<String> createStore(@RequestBody StoreModel input) throws JSONException{
+		Long initialRequest = System.currentTimeMillis();
 		JSONObject responseJson = new JSONObject();
 		try{
 			responseJson = JSONObject.class.newInstance();
@@ -37,11 +38,14 @@ public class StoreController {
 		System.out.println("ERROR.: " + e.getMessage());
 		}
 		String returnCode = responseJson.isNull("code") ? "1000" : responseJson.getString("code");
+		Long finalRequest = System.currentTimeMillis();
+		responseJson.put("timeRequest", Util.formatExecutionTimeApi(initialRequest, finalRequest));
 		return new ResponseEntity<String>(responseJson.toString(),Util.validCode(returnCode));
 	}
 	
 	@GetMapping(value = "/findStore" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody ResponseEntity<String> findStores() throws JSONException{
+		Long initialRequest = System.currentTimeMillis();
 		JSONObject responseJson = new JSONObject();
 		try{
 			responseJson = JSONObject.class.newInstance();
@@ -51,11 +55,14 @@ public class StoreController {
 			System.out.println("ERROR.:" + e.getMessage());
 		}
 		String returnCode = responseJson.isNull("code") ? "1000" : responseJson.getString("code");
+		Long finalRequest = System.currentTimeMillis();
+		responseJson.put("timeRequest", Util.formatExecutionTimeApi(initialRequest, finalRequest));
 		return new ResponseEntity<String>(responseJson.toString(), Util.validCode(returnCode));
 	}
 	
 	@DeleteMapping(value = "/deleteStore/{id}" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody ResponseEntity<String> deleteStore(@PathVariable Integer id) throws JSONException{
+		Long initialRequest = System.currentTimeMillis();
 		JSONObject responseJson = new JSONObject();
 		try{
 			responseJson.getClass().newInstance();
@@ -65,11 +72,14 @@ public class StoreController {
 			responseJson.put("code", "1000").put("description","INTERNAL SERVER ERROR (TIME OUT)");
 		}
 		String returnCode = responseJson.isNull("code") ? "1000" : responseJson.getString("code");
+		Long finalRequest = System.currentTimeMillis();
+		responseJson.put("timeRequest", Util.formatExecutionTimeApi(initialRequest, finalRequest));
 		return new ResponseEntity<String>(responseJson.toString(), Util.validCode(returnCode));
 	}
 	
 	@PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody ResponseEntity<String> updateStore(@RequestBody StoreModel input, @PathVariable Integer id) throws JSONException{
+		Long initialRequest = System.currentTimeMillis();
 		JSONObject responseJson = new JSONObject();
 		try{
 			responseJson = JSONObject.class.newInstance();
@@ -79,6 +89,8 @@ public class StoreController {
 		System.out.println("ERROR.: " + e.getMessage());
 		}
 		String returnCode = responseJson.isNull("code") ? "1000" : responseJson.getString("code");
+		Long finalRequest = System.currentTimeMillis();
+		responseJson.put("timeRequest", Util.formatExecutionTimeApi(initialRequest, finalRequest));
 		return new ResponseEntity<String>(responseJson.toString(),Util.validCode(returnCode));
 	}
 

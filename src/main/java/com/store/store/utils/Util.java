@@ -1,5 +1,8 @@
 package com.store.store.utils;
 
+import java.util.Formatter;
+import java.util.Locale;
+
 import org.springframework.http.HttpStatus;
 
 public class Util {
@@ -13,6 +16,16 @@ public class Util {
 		} else {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+
+	}
+	
+	@SuppressWarnings("resource")
+	public static String  formatExecutionTimeApi(Long tempoInicial , Long tempoFinal ){
+		 Formatter formatter = null;
+	if ((formatter == null)
+            || (formatter.locale() != Locale.getDefault()))
+            formatter = new Formatter();
+	return   formatter.format(Locale.getDefault(), "%.3f ms%n", (tempoFinal - tempoInicial) / 1000d).toString();
 
 	}
 
