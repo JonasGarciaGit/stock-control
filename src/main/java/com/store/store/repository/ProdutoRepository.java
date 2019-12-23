@@ -34,4 +34,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoModel, Integer> 
 	@Query(value = "select PRODUCT_STOCK from TB_PRODUCT where id = :productId and PRODUCT_STORE = :storeId" , nativeQuery = true)
 	public Integer getQuantityInStock(@Param(value = "productId") Integer productId,
 			@Param(value = "storeId") Integer storeId);
+	
+	@Query("from ProdutoModel where name = :productName")
+	public ProdutoModel verifyProductExistence(@Param(value ="productName")String productName);
+	
 }

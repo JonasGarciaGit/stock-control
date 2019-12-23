@@ -39,7 +39,9 @@ public class ProdutoService {
 			productList = readExcel();
 
 			for (ProdutoModel p : productList) {
-				productRepository.save(p);
+				if (productRepository.verifyProductExistence(p.getName()) == null) {
+					productRepository.save(p);
+				}
 			}
 
 			responseJson.put("code", "0").put("description", "products added");
@@ -68,10 +70,8 @@ public class ProdutoService {
 
 			for (ProdutoModel p : products) {
 				JSONObject auxJson = new JSONObject();
-				auxJson.put("name", p.getName())
-				.put("price", p.getPrice())
-				.put("category", p.getCategory())
-				.put("product_id", p.getId());
+				auxJson.put("name", p.getName()).put("price", p.getPrice()).put("category", p.getCategory())
+						.put("product_id", p.getId());
 				productsJson.put(auxJson);
 			}
 			responseJson.put("products", productsJson);
